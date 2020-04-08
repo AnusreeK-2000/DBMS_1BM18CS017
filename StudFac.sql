@@ -51,7 +51,7 @@ where fname='MV' AND Faculty.fid=Class.Fid and Student.snum=Enrolled.snum and Cl
 select cname
 from Class
 where room='R128' OR cname in ( select distinct cname 
-								from Enrolled
+				from Enrolled
                                 group by cname
                                 having count(*)>=5);
                                 
@@ -59,7 +59,7 @@ where room='R128' OR cname in ( select distinct cname
 select sname
 from Student
 where snum in (select e1.snum 
-				from Enrolled e1,Enrolled e2,Class c1,Class c2
+		from Enrolled e1,Enrolled e2,Class c1,Class c2
                 where e1.snum=e2.snum and e1.cname=c1.cname and e2.cname=c2.cname and e1.cname<>e2.cname and c1.meetsat=c2.meetsat);
                 
 
@@ -67,7 +67,7 @@ where snum in (select e1.snum
 select fname
 from Faculty
 where not exists(select room from Class
-				 except
+	         except
                  select distinct c.room 
                  from Class c
                  where c.fid=Faculty.fid);
@@ -87,7 +87,7 @@ where 5>(select count(Enrolled.snum)
 select sname
 from Student
 where snum not in (select snum
-					from Enrolled);
+		   from Enrolled);
                     
  
 /* vii.	For each age value that appears in Students, find the level value that appears most often. For example, if there are more FR level students aged 18 than SR, JR, or SO students aged 18, you should print the pair (18, FR). */
@@ -96,10 +96,10 @@ from Student S
 group by S.age, S.lvl
 having S.lvl in (select S1.lvl from Student S1
                  where S1.age = S.age
-				 group by S1.lvl, S1.age
+		 group by S1.lvl, S1.age
                  having count(*) >= all (select count(*)
-										from Student S2
-										where s1.age = S2.age
-										group by S2.lvl, S2.age));
+					 from Student S2
+					  where s1.age = S2.age
+					  group by S2.lvl, S2.age));
 				
 
