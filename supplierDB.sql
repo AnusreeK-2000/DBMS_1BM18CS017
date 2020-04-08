@@ -50,19 +50,19 @@ select pname
 from Parts,Catalog,Supplier
 where Catalog.pid=Parts.pid and Catalog.sid=Supplier.sid 
 and Supplier.sname='Acme Widget' and Catalog.pid not in (select c.pid from Catalog c ,Supplier s
-															where s.sid=c.sid and s.sname<>'Acme Widget');
+							where s.sid=c.sid and s.sname<>'Acme Widget');
 
 
 select sid
 from Catalog c
 where c.cost>( select avg(c1.cost)
-				from Catalog c1
-				where c.pid=c1.pid);
+		from Catalog c1
+		where c.pid=c1.pid);
                 
                 
 select p.pid, s.sname
 from Parts p, Supplier s, Catalog c
 where p.pid=c.pid and s.sid=c.sid
 and c.cost=(select max(c1.cost)
-			from Catalog c1
+	    from Catalog c1
             where c1.pid=c.pid);
