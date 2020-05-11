@@ -46,9 +46,9 @@ from BankCustomer c where exists(
                                     
 select BC.customer_name from BankCustomer BC where not exists(
 	select branch_name from Branch where branch_city = 'Delhi'
-	except
+	where branch_name not in(
     select BA.branch_name from Depositer D, BankAccount BA
-	where D.accno = BA.accno and BC.customer_name = D.customer_name
+	where D.accno = BA.accno and BC.customer_name = D.customer_name)
 );
 
 delete from BankAccount 
