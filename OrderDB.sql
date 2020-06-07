@@ -65,6 +65,15 @@ from salesman A
 where 1 < (select count(*) 
 from CUSTOMER 
 where Salesman_id=A.salesman_id);
+					      
+/* 3 */
+select s.salesman_id,s.sname,c.Cust_Name,s.commission
+from salesman s,customer c
+where s.city=c.City
+union
+select salesman_id,sname,'NO MATCH',commission
+from salesman
+where not city=any(select City from customer);					      
 
 
 /*4. Create a view that finds the salesman who has the customer with the highest order of a day. */
